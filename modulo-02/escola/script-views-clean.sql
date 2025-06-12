@@ -101,7 +101,25 @@ select * from vw_situacao_aluno;
 -- 6) Mostra o histórico de disciplinas cursadas por cada aluno, incluindo nota
 -- matricula aluno, nome do aluno, cod turma, nota
 
+CREATE OR REPLACE VIEW vw_historico_disciplinas_aluno AS
+SELECT
+    a.matricula AS matricula_aluno,
+    a.nome AS nome_do_aluno,
+    n.cod_turma,
+    d.nome AS nome_disciplina,
+    n.nota,
+    n.ano,
+    n.semestre
+FROM
+    alunos a
+JOIN
+    notas n ON a.matricula = n.matricula_aluno
+JOIN
+    disciplinas d ON n.cod_disciplina = d.cod_disciplina
+ORDER BY
+    a.matricula, n.ano, n.semestre, d.nome;
 
+SELECT * FROM vw_historico_disciplinas_aluno;
 
 --------------------------------------------------------------------------------------
 
